@@ -21,11 +21,47 @@ class Temperature:
     def temp_f(self, value):
         self.temp_c = 5 / 9 * (value - 32)
 
+    def __str__(self):
+        return f'Temperature {self.temp_c}'
+
+    def __repr__(self):
+        return f'{type(self).__name__} (temp={self._temp})'
+
+    def __format__(self, format_spec):
+        formatters = {
+            'c': self.temp_c,
+            'f': self.temp_f
+        }
+
+        return formatters.get(format_spec, self.temp_c)
+
+#        match format_spec:
+#            case 'c':
+#                return self.temp_c
+#            case 'f':
+#                return self.temp_f
+#            case _:
+#                return self.temp_c
+
+#        if 'c' == format_spec:
+#            result = self.temp_c
+#        elif 'f' == format_spec:
+#            result = self.temp_f
+#        else:
+#            result = self.temp_c
+#
+#        return result
+            
+class MarsTemperature(Temperature):
+    pass
+
+class JupiterTemperature(Temperature):
+    pass
+
 t = Temperature(40)
-t.temp_c = 40
-print(t.temp_c)
-print(t.temp_f)
-t.temp_f = 40
-print(t.temp_c)
-print(t.temp_f)
-# print(dir(t), vars(t))
+t2 = Temperature(2137)
+t3 = JupiterTemperature(8000)
+#print(str(t), repr(t))
+#print(str(t2), repr(t2))
+#print(str(t3), repr(t3))
+print(f'{t:c}', f'{t:f}')
