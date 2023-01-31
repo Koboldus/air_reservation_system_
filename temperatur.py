@@ -1,17 +1,31 @@
 class Temperature:
     def __init__(self, temp):
-        self._temp = temp
+        self.temp = temp
 
     @property
-    def temp(self):
+    def temp_c(self):
         return f'{self._temp}C'
 
-    def set_temp(self, value):
+    @temp_c.setter
+    def temp_c(self, value):
         if value < -273.15:
-            raise ValueError(f'too cold')
+            raise ValueError(f'too cold: {value}')
 
         self._temp = value
 
-t = Temperature(42)
+    @property
+    def temp_f(self):
+        return f'{32 + 9/5 * self._temp:.2f} F'
 
-print(t.temp())
+    @temp_f.setter
+    def temp_f(self, value):
+        self.temp_c = 5/9 * (value - 32)
+
+t = Temperature(40)
+t.temp_c = 45
+print(t.temp_c)
+print(t.temp_f)
+
+t.temp_f = -500
+print(t.temp_c)
+print(t.temp_f)
